@@ -11,48 +11,60 @@ def HomeNav():
 
 
 def AboutPageNav():
-    st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
+    st.sidebar.page_link("pages/40_About.py", label="About", icon="🧠")
 
 
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
-def PolStratAdvHomeNav():
+def SurveyFormNav():
     st.sidebar.page_link(
-        "pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon="👤"
+        "pages/01_Survey_Form.py", label="Survey", icon="👤"
     )
 
 
-def WorldBankVizNav():
+def BuildingViewerNav():
     st.sidebar.page_link(
-        "pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon="🏦"
+        "pages/02_Building_Viewer.py", label="Building Viewer", icon="🏦"
     )
 
 
-def MapDemoNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon="🗺️")
+def StudentDashboardNav():
+    st.sidebar.page_link("pages/02_Building_Viewer.py", label="Dashboard", icon="🗺️")
 
 
 ## ------------------------ Examples for Role of usaid_worker ------------------------
-def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon="🛜")
+def RADashboardNav():
+    st.sidebar.page_link("pages/11_RA_Dashboard.py", label="Dashboard", icon="🛜")
 
 
-def PredictionNav():
+def EventOrganizerNav():
     st.sidebar.page_link(
-        "pages/11_Prediction.py", label="Regression Prediction", icon="📈"
-    )
-
-
-def ClassificationNav():
-    st.sidebar.page_link(
-        "pages/13_Classification.py", label="Classification Demo", icon="🌺"
+        "pages/12_Calendar.py", label="Calendar", icon="📈"
     )
 
 
 #### ------------------------ System Admin Role ------------------------
-def AdminPageNav():
-    st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon="🖥️")
+
+def AnalyticsNav():
     st.sidebar.page_link(
-        "pages/21_ML_Model_Mgmt.py", label="ML Model Management", icon="🏢"
+        "pages/21_Analytics.py", label="Analytics", icon="🌺"
+    )
+
+    
+def ManagementDashboardNav():
+    st.sidebar.page_link(
+        "pages/22_Management.py", label="Management", icon="🌺"
+    )
+
+
+#### ------------------------ System Admin Role ------------------------
+
+def SystemMetricsNav():
+    st.sidebar.page_link("pages/31_Metrics.py", label="Metrics", icon="🖥️")
+    
+    
+def PermissionsDashboard():
+    st.sidebar.page_link(
+        "pages/32_Permissions.py", label="Permissions", icon="🏢"
     )
 
 
@@ -78,20 +90,26 @@ def SideBarLinks(show_home=False):
     if st.session_state["authenticated"]:
 
         # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
-        if st.session_state["role"] == "pol_strat_advisor":
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
+        if st.session_state["role"] == "student":
+            SurveyFormNav()
+            BuildingViewerNav()
+            StudentDashboardNav()
 
         # If the user role is usaid worker, show the Api Testing page
-        if st.session_state["role"] == "usaid_worker":
-            PredictionNav()
-            ApiTestNav()
-            ClassificationNav()
+        if st.session_state["role"] == "ra":
+            RADashboardNav()
+            EventOrganizerNav()
+
+        # If the user is an administrator, give them access to the administrator pages
+        if st.session_state["role"] == "ha":
+            AnalyticsNav()
+            ManagementDashboardNav()
+
 
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state["role"] == "administrator":
-            AdminPageNav()
+            SystemMetricsNav()
+            PermissionsDashboard()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
