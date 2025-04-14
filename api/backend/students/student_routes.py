@@ -30,3 +30,29 @@ def get_students():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+
+# Get student preferences
+@students.route('/students/<id>/preferences', methods=['GET'])
+def get_student_preferences(id):
+    current_app.logger.info(f'GET /students/{id}/preferences route')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT * FROM preferences WHERE stuId = %s', (id,))
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# Get student complaints
+@students.route('/students/<id>/complaints', methods=['GET'])
+def get_student_complaints(id):
+    current_app.logger.info(f'GET /students/{id}/complaints route')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT * FROM complaints WHERE stuId = %s', (id,))
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
