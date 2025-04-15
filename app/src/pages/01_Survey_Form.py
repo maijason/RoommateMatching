@@ -1,41 +1,33 @@
-import logging
-logger = logging.getLogger(__name__)
-import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
-from modules.nav import SideBarLinks
+import requests
+from datetime import time
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+st.set_page_config(page_title="Roommate Preferences Survey", layout="centered")
+st.title("Roommate Preferences Survey")
 
-# set the header of the page
-st.header('World Bank Data')
+with st.form("preferences_form"):
+    st.write("Input dorm preferences:")
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+    sleep_time = st.time_input("Preferred bedtime:", value=time(23, 0))
+    cleanliness = st.number_input("Preferred cleanliness on a scale from 1 (messy) to 5 (very clean)", min_value=1, max_value=5, step=1)
+    smoking = st.radio("I would prefer to live with someone who does not smoke", ["No", "Yes"])
+    extra_observations = st.text_area("Please write here any extra observations")
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+    submitted = st.form_submit_button("Submit Preferences")
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+    if submitted:
+        data = {
+            "sleepTime": sleep_time.strftime("%H:%M"),
+            "cleanliness": cleanliness,
+            "smoking": 1 if smoking == "No" else 0,
+            "extra_observations": extra_observations
+        }
 
-    st.pyplot(test_plot)
-
-
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+        try:
+            response = requests.post("http://localhost:4000/preferences", json=data)
+            if response.status_code == 200:
+                st.success("Preferences submitted successfully!")
+            else:
+                st.error("Failed to submit preferences.")
+        except requests.exceptions.RequestException:
+            st.error("An exception occurred")
