@@ -5,7 +5,7 @@ st.set_page_config(page_title="Dorm Building Viewer", layout="centered")
 st.title("Dorm Building Viewer")
 
 try:
-    response = requests.get("http://localhost:4000/dorms")
+    response = requests.get("http://localhost:4000/d/dorms")
     response.raise_for_status()
     dorms = response.json()
 
