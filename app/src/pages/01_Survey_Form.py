@@ -24,7 +24,7 @@ with st.form("preferences_form"):
         }
 
         try:
-            response = requests.post("http://localhost:8501/preferences", json=data)
+            response = requests.post("http://localhost:4000/preferences", json=data)
             if response.status_code == 200:
                 st.success("Preferences submitted successfully!")
             else:
