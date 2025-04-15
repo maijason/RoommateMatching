@@ -16,12 +16,12 @@ try:
             with st.container():
                 st.subheader(dorm["name"])
                 st.write(f"Address: {dorm['address']}")
-                st.write(f"Capacity: {dorm['capacity']}")
-                st.write(f"Room Type: {dorm['room_type']}")
-                st.write(f"Amenities: {', '.join(dorm['amenities'])}")
+                st.write(f"Capacity: {dorm['maxCapacity']}")
+                st.write(f"Room occupancy: {dorm['occupancy']}")
+                st.write(f"Amenities: {dorm['amenities']}")
                 st.markdown("---")
     else:
         st.info("No dorms found")
 
 except requests.exceptions.RequestException:
-    st.error("An exception occured")
+    st.error("An exception occurred")
