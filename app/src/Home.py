@@ -54,7 +54,7 @@ if st.button("Act as Bob, a Student",
     st.session_state['first_name'] = 'Bob'
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
-    logger.info("Logging in as Political Strategy Advisor Persona")
+    logger.info("Logging in as Bob Student")
     st.switch_page('pages/00_Student_Home.py')
 
 if st.button('Act as Renee, an RA', 
