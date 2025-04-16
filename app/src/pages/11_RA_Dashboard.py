@@ -19,13 +19,13 @@ residents = requests.get(f'http://api:4000/ra/residents/{st.session_state["id"]}
 st.dataframe(residents)
 
 
-st.header('Complaints')
+st.header('My Complaints')
 
 # get complaints
 complaints = requests.get(f'http://api:4000/ra/complaints/{st.session_state["id"]}').json()
 st.dataframe(complaints)
 
-st.header('Events')
+st.header('My Events')
 
 # get events
 events = requests.get(f'http://api:4000/ra/events/{st.session_state["id"]}').json()
