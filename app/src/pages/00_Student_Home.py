@@ -4,32 +4,27 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config(layout='wide')
 
-# Show appropriate sidebar links for the role of the currently logged in user
+# Show sidebar links based on the student role
 SideBarLinks()
 
-st.title(f"Welcome Political Strategist, {st.session_state['first_name']}.")
-st.write('')
-st.write('')
-st.write('### What would you like to do today?')
+# Use session state to greet the logged-in student
+first_name = st.session_state.get('first_name', 'Student')
 
-if st.button('View World Bank Data Visualization', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+st.title(f"👋 Welcome back, {first_name}!")
+st.write("")
+st.write("### What would you like to do today?")
 
-if st.button('View World Map Demo', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+# Navigation buttons
+if st.button("📝 Fill Out Preferences", type="primary", use_container_width=True):
+    st.switch_page("pages/10_User_Preferences.py")
 
-if st.button('View All Dorms', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/04_View_All_Dorms.py')
+if st.button("📅 View Upcoming Events", type="primary", use_container_width=True):
+    st.switch_page("pages/05_Upcoming_Events.py")
 
-if st.button('Find Roommates', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/05_Roommate_Matching.py')
+if st.button("🚨 Report a Disturbance", type="primary", use_container_width=True):
+    st.switch_page("pages/06_Log_Disturbance.py")
+
+if st.button("🏘️ View All Dorms", type="primary", use_container_width=True):
+    st.switch_page("pages/04_View_All_Dorms.py")
