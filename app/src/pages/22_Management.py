@@ -13,10 +13,6 @@ SideBarLinks()
 
 st.title('Manage Dorm Capacity and Availability')
 
-st.button('Select Dorm', type='secondary', key='select_dorm_btn')
-st.button('Floor Filter', type='secondary', key='floor_filter_btn')
-
-
 def generate_fake_dorm_data(num_dorms=3):
     dorm_names = ["Speare", "IV", "White Hall", "East Village", "West Village", "International Village"]
     data = []
@@ -28,65 +24,92 @@ def generate_fake_dorm_data(num_dorms=3):
             "Dorm Name": dorm_names[i],
             "Capacity": capacity,
             "Occupied": occupied,
-            "Available": capacity - occupied,
-            "Edit": "Edit"
+            "Available": capacity - occupied
         })
     return data
 
-try:
-    response = requests.get("http://api:5000/dorms")
-    if response.status_code == 200:
-        dorm_data = response.json()
-        for dorm in dorm_data:
-            dorm["Edit"] = "Edit"
-    else:
-        logger.warning(f"Failed to fetch real data: {response.status_code}. Using generated data.")
-        dorm_data = generate_fake_dorm_data()
-except Exception as e:
-    logger.error(f"API error: {str(e)}. Using generated data.")
-    dorm_data = generate_fake_dorm_data()
+if 'dorm_data' not in st.session_state:
+    try:
+        response = requests.get("http://api:5000/dorms")
+        if response.status_code == 200:
+            st.session_state.dorm_data = response.json()
+        else:
+            logger.warning(f"Failed to fetch real data: {response.status_code}. Using generated data.")
+            st.session_state.dorm_data = generate_fake_dorm_data()
+    except Exception as e:
+        logger.error(f"API error: {str(e)}. Using generated data.")
+        st.session_state.dorm_data = generate_fake_dorm_data()
 
 st.write("")
-st.table(dorm_data)
+st.table(st.session_state.dorm_data)
 
 st.write("\n\n")
-st.write("## Update Dorm Capacity")
+st.write("## Update Dorm Information")
 
-dorm_names = [dorm["Dorm Name"] for dorm in dorm_data]
+dorm_names = [dorm["Dorm Name"] for dorm in st.session_state.dorm_data]
 
 selected_dorm = st.selectbox(
     "Select dorm to update",
     options=dorm_names
 )
 
-current_capacity = next(
-    (item["Capacity"] for item in dorm_data if item["Dorm Name"] == selected_dorm), 0
-)
+current_dorm = next((item for item in st.session_state.dorm_data if item["Dorm Name"] == selected_dorm), None)
+current_capacity = current_dorm["Capacity"] if current_dorm else 0
+current_occupied = current_dorm["Occupied"] if current_dorm else 0
 
 selected_dorm_id = next(
-    (item.get("dormId", i + 1) for i, item in enumerate(dorm_data) if item["Dorm Name"] == selected_dorm), 1
+    (item.get("dormId", i + 1) for i, item in enumerate(st.session_state.dorm_data) if item["Dorm Name"] == selected_dorm), 1
 )
 
-new_capacity = st.number_input("New Capacity", min_value=0, value=current_capacity)
+new_capacity = st.number_input("Total Capacity", min_value=0, value=current_capacity)
+new_occupied = st.number_input("Occupied Rooms", min_value=0, max_value=new_capacity, value=min(current_occupied, new_capacity))
+
+new_available = new_capacity - new_occupied
+
+st.info(f"Available Rooms: {new_available}")
 
 # update button
-if st.button('Update Capacity', type='primary', use_container_width=True):
+if st.button('Update Dorm Information', type='primary', use_container_width=True):
     try:
         response = requests.put(
             f"http://api:5000/dorms/{selected_dorm_id}/availability",
-            json={"capacity": new_capacity}
+            json={"capacity": new_capacity, "occupied": new_occupied}
         )
 
         if response.status_code == 200:
-            st.success(f"Successfully updated capacity for {selected_dorm} to {new_capacity}")
-            st.experimental_rerun()
+            for dorm in st.session_state.dorm_data:
+                if dorm["Dorm Name"] == selected_dorm:
+                    dorm["Capacity"] = new_capacity
+                    dorm["Occupied"] = new_occupied
+                    dorm["Available"] = new_available
+                    break
+            
+            st.success(f"Successfully updated information for {selected_dorm}:\n- Capacity: {new_capacity}\n- Occupied: {new_occupied}\n- Available: {new_available}")
         else:
-            st.error(f"Failed to update capacity: {response.status_code} - {response.text}")
+            st.error(f"Failed to update dorm information: {response.status_code} - {response.text}")
+            
+            for dorm in st.session_state.dorm_data:
+                if dorm["Dorm Name"] == selected_dorm:
+                    dorm["Capacity"] = new_capacity
+                    dorm["Occupied"] = new_occupied
+                    dorm["Available"] = new_available
+                    break
+            
+            st.warning("API error")
 
     except Exception as e:
-        logger.error(f"Error updating capacity: {str(e)}")
-        st.error(f"An error occurred while updating capacity.")
+        logger.error(f"Error updating dorm information: {str(e)}")
+        st.error(f"An error occurred while updating dorm information.")
+        
+        for dorm in st.session_state.dorm_data:
+            if dorm["Dorm Name"] == selected_dorm:
+                dorm["Capacity"] = new_capacity
+                dorm["Occupied"] = new_occupied
+                dorm["Available"] = new_available
+                break
+        
+        st.warning("API error")
 
 st.write("\n\n")
-if st.button('Return to Dashboard', type='primary'):
+if st.button('Return to Dashboard', type='primary', use_container_width=True):
     st.switch_page('pages/20_HA_Home.py')
