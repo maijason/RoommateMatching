@@ -14,9 +14,8 @@ def get_residents_for_ra(ra_id):
             JOIN studentBridgeRA sb ON sb.studId = s.studId
             WHERE sb.raId = %s
         """
-        cursor.execute(query, (ra_id,))
+        cursor.execute(query)
         data = cursor.fetchall()
-        cursor.close()
 
         residents = [
             {
