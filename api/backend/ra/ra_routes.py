@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from backend.db_connection import db
+from flask import make_response
 
 ra_bp = Blueprint('ra', __name__)
 
@@ -26,3 +27,25 @@ def get_residents_for_ra(ra_id):
         ]
 
         return jsonify(residents)
+
+@ra_bp.route('/conflicts', methods=['GET'])
+def get_conflicts():
+        cursor = db.get_db().cursor()
+
+        query = """
+            SELECT 
+                c.confId,
+                c.urgency,
+                h.firstName AS haFirstName,
+                h.lastName AS haLastName
+            FROM conflicts c
+            JOIN housingAdmin h ON c.housingAdminId = h.haId
+        """
+
+        cursor.execute(query)
+        result_data = cursor.fetchall()
+
+        response_data = make_response(jsonify(result_data))
+        response_data.status_code = 200
+
+        return response_data
