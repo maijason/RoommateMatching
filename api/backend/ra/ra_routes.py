@@ -2,9 +2,9 @@ from flask import Blueprint, jsonify
 from backend.db_connection import db
 from flask import make_response
 
-ra_bp = Blueprint('ra', __name__)
+ra = Blueprint('ra', __name__)
 
-@ra_bp.route('/residents/<int:ra_id>', methods=['GET'])
+@ra.route('/residents/<int:ra_id>', methods=['GET'])
 def get_residents_for_ra(ra_id):
         cursor = db.get_db().cursor()
 
@@ -28,7 +28,7 @@ def get_residents_for_ra(ra_id):
 
         return jsonify(residents)
 
-@ra_bp.route('/conflicts', methods=['GET'])
+@ra.route('/conflicts', methods=['GET'])
 def get_conflicts():
         cursor = db.get_db().cursor()
 
