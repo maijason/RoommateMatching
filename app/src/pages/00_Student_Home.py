@@ -28,3 +28,8 @@ if st.button('View All Dorms',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/04_View_All_Dorms.py')
+
+if st.button('Find Roommates', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/05_Roommate_Matching.py')

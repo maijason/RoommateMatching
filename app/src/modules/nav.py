@@ -35,6 +35,10 @@ def StudentGetAllDormsNav():
     st.sidebar.page_link("pages/04_View_All_Dorms.py", label="Get All Dorms", icon="🏠")
 
 
+def RoommateMatchingNav():
+    st.sidebar.page_link("pages/05_Roommate_Matching.py", label="Roommate Matching", icon="🤝")
+
+
 ## ------------------------ Examples for Role of usaid_worker ------------------------
 def RADashboardNav():
     st.sidebar.page_link("pages/11_RA_Dashboard.py", label="Dashboard", icon="🛜")
@@ -99,6 +103,7 @@ def SideBarLinks(show_home=False):
             BuildingViewerNav()
             StudentDashboardNav()
             StudentGetAllDormsNav()
+            RoommateMatchingNav()
             
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state["role"] == "ra":
