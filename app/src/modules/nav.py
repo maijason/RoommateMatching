@@ -67,12 +67,12 @@ def ManagementDashboardNav():
 #### ------------------------ System Admin Role ------------------------
 
 def SystemMetricsNav():
-    st.sidebar.page_link("pages/31_Metrics.py", label="Metrics", icon="🖥️")
+    st.sidebar.page_link("pages/31_System_Metrics.py", label="Metrics", icon="🖥️")
     
     
 def PermissionsDashboard():
     st.sidebar.page_link(
-        "pages/32_Permissions.py", label="Permissions", icon="🏢"
+        "pages/32_Permissions_Dashboard.py", label="Permissions", icon="🏢"
     )
 
 
