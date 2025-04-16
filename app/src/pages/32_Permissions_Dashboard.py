@@ -28,10 +28,10 @@ roles_df = get_user_roles()
 st.dataframe(roles_df, use_container_width=True)
 
 st.subheader("Modify User Role")
-st.form_submit_button = st.form("role_form")
 
-username = st.selectbox("Select User", ["Sam", "Bill", "Jane", "Renee", "Alex", "Maria"])
-role = st.selectbox("Assign Role", ["System Admin", "Housing Admin", "RA", "Student"])
+form1 = st.form(key="modify_role_form")
+username = form1.selectbox("Select User", ["Sam", "Bill", "Jane", "Renee", "Alex", "Maria"])
+role = form1.selectbox("Assign Role", ["System Admin", "Housing Admin", "RA", "Student"])
 
 permissions = ""
 if role == "System Admin":
@@ -43,22 +43,18 @@ elif role == "RA":
 else:
     permissions = "Basic user access"
 
-st.write(f"Permissions that will be assigned: **{permissions}**")
+form1.write(f"Permissions that will be assigned: **{permissions}**")
+submitted = form1.form_submit_button("Update Role")
 
-submitted = st.form_submit_button("Update Role")
 if submitted:
     st.success(f"Updated {username}'s role to {role} with permissions: {permissions}")
 
 st.subheader("Add New User")
-new_user_form = st.form("new_user_form")
 
-new_username = st.text_input("Username")
-new_email = st.text_input("Email")
-new_role = st.selectbox(
-    "Role", 
-    ["System Admin", "Housing Admin", "RA", "Student"],
-    key="new_role"
-)
+form2 = st.form(key="add_user_form")
+new_username = form2.text_input("Username")
+new_email = form2.text_input("Email")
+new_role = form2.selectbox("Role", ["System Admin", "Housing Admin", "RA", "Student"])
 
 new_permissions = ""
 if new_role == "System Admin":
@@ -70,9 +66,9 @@ elif new_role == "RA":
 else:
     new_permissions = "Basic user access"
 
-st.write(f"Permissions that will be assigned: **{new_permissions}**")
+form2.write(f"Permissions that will be assigned: **{new_permissions}**")
+add_submitted = form2.form_submit_button("Add User")
 
-add_submitted = st.form_submit_button("Add User")
 if add_submitted:
     if new_username and new_email:
         st.success(f"Added new user {new_username} with role {new_role}")
@@ -88,4 +84,4 @@ changes_df = pd.DataFrame(changes_data)
 st.dataframe(changes_df, use_container_width=True)
 
 if st.button('Back to Admin Home', use_container_width=True):
-    st.switch_page('pages/30_System_Admin_Home.py')
+    st.switch_page('pages/30_Administrator_Home.py')
