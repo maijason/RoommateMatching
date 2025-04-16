@@ -10,29 +10,28 @@ st.set_page_config(layout = 'wide')
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
-st.title('Prediction with Regression')
+st.title('RA Dashboard')
 
-# create a 2 column layout
-col1, col2 = st.columns(2)
+st.header('My Students')
 
-# add one number input for variable 1 into column 1
-with col1:
-  var_01 = st.number_input('Variable 01:',
-                           step=1)
+# get students
+residents = requests.get(f'http://api:4000/ra/residents/{st.session_state["id"]}').json()
+st.dataframe(residents)
 
-# add another number input for variable 2 into column 2
-with col2:
-  var_02 = st.number_input('Variable 02:',
-                           step=1)
 
-logger.info(f'var_01 = {var_01}')
-logger.info(f'var_02 = {var_02}')
+st.header('Complaints')
 
-# add a button to use the values entered into the number field to send to the 
-# prediction function via the REST API
-if st.button('Calculate Prediction',
-             type='primary',
-             use_container_width=True):
-  results = requests.get(f'http://api:4000/c/prediction/{var_01}/{var_02}').json()
-  st.dataframe(results)
+# get complaints
+complaints = requests.get(f'http://api:4000/ra/complaints/{st.session_state["id"]}').json()
+st.dataframe(complaints)
+
+st.header('Events')
+
+# get events
+events = requests.get(f'http://api:4000/ra/events/{st.session_state["id"]}').json()
+st.dataframe(events)
+
+
+
+
   
