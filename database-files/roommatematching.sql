@@ -275,63 +275,63 @@ INSERT INTO systemAdminBridgeConflicts VALUES
     (1, 201),
     (2, 202);
 
--- -- View dorm locations and availability (Bob)
--- SELECT dormId, numRooms, occupancy, maxCapacity, bedsAvailable FROM dormBuilding;
+-- View dorm locations and availability (Bob)
+SELECT dormId, numRooms, occupancy, maxCapacity, bedsAvailable FROM dormBuilding;
 
--- -- View detailed information about each dorm (Bob)
--- SELECT dormId, numRooms, occupancy, bedsAvailable FROM dormBuilding;
+-- View detailed information about each dorm (Bob)
+SELECT dormId, numRooms, occupancy, bedsAvailable FROM dormBuilding;
 
--- -- Access resident contact info for an RA (Renee)
--- SELECT s.stuId, s.firstName, s.lastName, e.email
--- FROM student s
--- JOIN student_email e ON s.stuId = e.stuId
--- JOIN studentBridgeRA sr ON s.stuId = sr.stuId
--- WHERE sr.raId = 1;
+-- Access resident contact info for an RA (Renee)
+SELECT s.stuId, s.firstName, s.lastName, e.email
+FROM student s
+JOIN student_email e ON s.stuId = e.stuId
+JOIN studentBridgeRA sr ON s.stuId = sr.stuId
+WHERE sr.raId = 1;
 
--- -- View anonymous complaints from students (Renee)
--- SELECT compId, description
--- FROM complaints
--- WHERE stuId IN (
---   SELECT stuId FROM studentBridgeRA WHERE raId = 1
--- );
+-- View anonymous complaints from students (Renee)
+SELECT compId, description
+FROM complaints
+WHERE stuId IN (
+  SELECT stuId FROM studentBridgeRA WHERE raId = 1
+);
 
--- -- View overview of complaints and events (Renee)
--- SELECT c.compId, c.description, e.title, e.datetime
--- FROM complaints c
--- JOIN studentBridgeRA sr ON c.stuId = sr.stuId
--- LEFT JOIN RABridgeEvents re ON sr.raId = re.raId
--- LEFT JOIN events e ON re.datetime = e.datetime AND re.title = e.title
--- WHERE sr.raId = 1;
+-- View overview of complaints and events (Renee)
+SELECT c.compId, c.description, e.title, e.datetime
+FROM complaints c
+JOIN studentBridgeRA sr ON c.stuId = sr.stuId
+LEFT JOIN RABridgeEvents re ON sr.raId = re.raId
+LEFT JOIN events e ON re.datetime = e.datetime AND re.title = e.title
+WHERE sr.raId = 1;
 
--- -- View all events for an RA in calendar order (Renee)
--- SELECT title, datetime, location FROM events WHERE raId = 1 ORDER BY datetime ASC;
+-- View all events for an RA in calendar order (Renee)
+SELECT title, datetime, location FROM events WHERE raId = 1 ORDER BY datetime ASC;
 
--- -- Count of roommate conflicts per dorm (Jane)
--- SELECT db.dormId, COUNT(cs.confId) AS conflict_count
--- FROM dormBuilding db
--- JOIN dorm_room dr ON db.dormId = dr.dormId
--- JOIN conflicts_student cs ON cs.studentId = dr.stuId
--- JOIN conflicts c ON c.confId = cs.confId
--- GROUP BY db.dormId;
+-- Count of roommate conflicts per dorm (Jane)
+SELECT db.dormId, COUNT(cs.confId) AS conflict_count
+FROM dormBuilding db
+JOIN dorm_room dr ON db.dormId = dr.dormId
+JOIN conflicts_student cs ON cs.studentId = dr.stuId
+JOIN conflicts c ON c.confId = cs.confId
+GROUP BY db.dormId;
 
--- -- View roommate match success rates per dorm (Jane)
--- SELECT dormId, COUNT(*) AS successful_matches FROM dorm_room GROUP BY dormId;
+-- View roommate match success rates per dorm (Jane)
+SELECT dormId, COUNT(*) AS successful_matches FROM dorm_room GROUP BY dormId;
 
--- -- Summary report of dorm building stats (Jane)
--- SELECT dormId, numRooms, occupancy, maxCapacity, bedsAvailable FROM dormBuilding;
+-- Summary report of dorm building stats (Jane)
+SELECT dormId, numRooms, occupancy, maxCapacity, bedsAvailable FROM dormBuilding;
 
--- -- View all users and their roles/clearance levels
--- SELECT userId, role, clearance
--- FROM clearanceLevels;
+-- View all users and their roles/clearance levels
+SELECT userId, role, clearance
+FROM clearanceLevels;
 
--- -- View system admins and the complaints they can access
--- SELECT sac.adminId, sa.firstName, sa.lastName, c.confId, c.urgency
--- FROM systemAdminBridgeConflicts sac
--- JOIN systemAdmin sa ON sac.adminId = sa.adminId
--- JOIN conflicts c ON sac.confId = c.confId;
+-- View system admins and the complaints they can access
+SELECT sac.adminId, sa.firstName, sa.lastName, c.confId, c.urgency
+FROM systemAdminBridgeConflicts sac
+JOIN systemAdmin sa ON sac.adminId = sa.adminId
+JOIN conflicts c ON sac.confId = c.confId;
 
--- -- View which system admins are managing which users (with clearance info)
--- SELECT sa.adminId, sa.firstName, sa.lastName, cl.userId, cl.role, cl.clearance
--- FROM systemAdmin sa
--- JOIN systemAdminBridgeClearanceLevel sbcl ON sa.adminId = sbcl.adminId
--- JOIN clearanceLevels cl ON sbcl.userId = cl.userId;
+-- View which system admins are managing which users (with clearance info)
+SELECT sa.adminId, sa.firstName, sa.lastName, cl.userId, cl.role, cl.clearance
+FROM systemAdmin sa
+JOIN systemAdminBridgeClearanceLevel sbcl ON sa.adminId = sbcl.adminId
+JOIN clearanceLevels cl ON sbcl.userId = cl.userId;

@@ -8,6 +8,10 @@ from backend.students.student_routes import students
 from backend.dorms.dorm_routes import dorms
 from backend.system_admin.system_admin_routes import system_admin
 from backend.ra.ra_routes import ra
+from backend.events.events_routes import events
+from backend.ra.ra_routes import ra
+from backend.housing_admin.housing_admin_routes import housing_admin
+
 import os
 from dotenv import load_dotenv
 
@@ -49,7 +53,6 @@ def create_app():
     app.register_blueprint(students,    url_prefix='/s')
     app.register_blueprint(dorms,    url_prefix='/d')
     app.register_blueprint(system_admin,    url_prefix='/admin')
-    app.register_blueprint(ra,    url_prefix='/ra')
 
     # Don't forget to return the app object
     return app
