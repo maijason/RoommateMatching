@@ -9,7 +9,7 @@ student_id = st.session_state.get("id", 1)
 
 existing_preferences = None
 try:
-    response = requests.get(f"http://api:4000/s/students/{student_id}/preferences")
+    response = requests.get(f"http://web-api:4000/s/students/{student_id}/preferences")
     if response.status_code == 200:
         data = response.json()
         if data:
@@ -61,7 +61,7 @@ with st.form("preferences_form"):
         }
 
         try:
-            response = requests.post(f"http://api:4000/s/students/{student_id}/preferences", json=data)
+            response = requests.post(f"http://web-api:4000/s/students/{student_id}/preferences", json=data)
             if response.status_code == 200:
                 st.success("Preferences submitted successfully!")
 

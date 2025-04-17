@@ -1,106 +1,126 @@
 import logging
 logger = logging.getLogger(__name__)
 import streamlit as st
+import requests
+import matplotlib.pyplot as plt
 import pandas as pd
 from modules.nav import SideBarLinks
 
-logger.info("Loading System Metrics page")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-st.set_page_config(layout='wide', page_title='RoommateMatching - System Metrics')
-
+# --- Page Configuration ---
+st.set_page_config(page_title="System Metrics", page_icon="📊", layout="wide")
 SideBarLinks()
 
-st.title("System Metrics Dashboard")
+# --- Title & Intro ---
+st.title("Roomies4Life System Metrics")
+st.markdown("Monitor system performance, track suspicious activity, and manage security alerts.")
 
-st.write("""
-# System Performance Monitoring
+# --- API Base URL ---
+API_URL = "http://web-api:4000/admin"
 
-This dashboard provides an overview of system performance metrics, alerts, and suspicious activity 
-for the Roomies4Life platform.
-""")
+# --- Helper Functions ---
+def fetch_system_stats():
+    try:
+        res = requests.get(f"{API_URL}/system/stats")
+        res.raise_for_status()
+        return res.json()[0]
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching system stats: {e}")
+        st.error("Failed to fetch system statistics.")
+        return {}
 
-st.sidebar.header('System Filter Options')
+def fetch_suspicious_logins():
+    try:
+        res = requests.get(f"{API_URL}/security/login-attempts")
+        res.raise_for_status()
+        return pd.DataFrame(res.json())
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching suspicious logins: {e}")
+        st.error("Failed to fetch suspicious login data.")
+        return pd.DataFrame()
 
-def filter_options():
-    time_period = st.sidebar.selectbox('Time Period', 
-                                      ['Last 24 Hours', 'Last Week', 'Last Month', 'All Time'])
-    alert_level = st.sidebar.selectbox('Alert Level', 
-                                      ['All', 'Critical', 'Warning', 'Information'])
-    show_resolved = st.sidebar.checkbox('Show Resolved Issues', value=False)
+def fetch_data_access_logs():
+    try:
+        res = requests.get(f"{API_URL}/audit/data-access")
+        res.raise_for_status()
+        return pd.DataFrame(res.json())
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching data access logs: {e}")
+        st.error("Failed to fetch data access logs.")
+        return pd.DataFrame()
+
+# --- System Overview Metrics ---
+st.subheader("📊 System Overview")
+
+system_stats = fetch_system_stats()
+if system_stats:
+    col1, col2, col3 = st.columns(3)
     
-    filters = {
-        'time_period': time_period,
-        'alert_level': alert_level,
-        'show_resolved': show_resolved
-    }
-    return filters
+    total_users = system_stats.get("total_students", 0) + system_stats.get("total_RAs", 0) + system_stats.get("total_admins", 0)
+    col1.metric("Total Users", total_users)
+    col2.metric("Active Events", system_stats.get("total_events", 0))
+    col3.metric("Open Complaints", system_stats.get("total_complaints", 0))
+    
+    # Additional metrics row
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Student Users", system_stats.get("total_students", 0))
+    col2.metric("RA Users", system_stats.get("total_RAs", 0))
+    col3.metric("Admin Users", system_stats.get("total_admins", 0))
+else:
+    st.info("No system statistics available.")
 
-filters = filter_options()
+# --- Suspicious Login Activity ---
+st.subheader("🚨 Suspicious Login Activity")
+suspicious_logins = fetch_suspicious_logins()
 
-st.subheader('System Overview')
-metrics_data = {
-    "Metric": ["Uptime", "Active Users", "Response Time"],
-    "Value": ["99.9%", "100", "120ms"]
-}
-metrics_df = pd.DataFrame(metrics_data)
-st.dataframe(metrics_df)
+if not suspicious_logins.empty:
+    st.warning(f"{len(suspicious_logins)} users have suspicious login activity")
+    
+    # Add visualization
+    fig, ax = plt.subplots(figsize=(10, 5))
+    suspicious_logins.sort_values('failed_attempts', ascending=False, inplace=True)
+    ax.bar(suspicious_logins['userId'].astype(str), suspicious_logins['failed_attempts'])
+    ax.set_xlabel("User ID")
+    ax.set_ylabel("Failed Login Attempts")
+    ax.set_title("Failed Login Attempts by User")
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
+    
+    # Display the data table with suspicious logins
+    st.dataframe(suspicious_logins, use_container_width=True)
+else:
+    st.success("No suspicious login activity detected.")
 
-st.subheader('Current Alerts')
-alerts_data = {
-    "Alert Type": ["Backup Warning", "Updates"],
-    "Message": ["Last backup was over 48h ago", "Security patch ready"],
-    "Severity": ["Warning", "Information"]
-}
-alerts_df = pd.DataFrame(alerts_data)
-st.dataframe(alerts_df)
+# --- Data Access Logs ---
+st.subheader("📝 Data Access Audit Logs")
+data_access_logs = fetch_data_access_logs()
 
-st.subheader('Alert Resolution')
-form1 = st.form(key="resolve_alert_form")
-alert_to_resolve = form1.selectbox("Select Alert to Resolve", ["Backup Warning", "Updates"])
-resolution_action = form1.text_area("Resolution Action", height=100, 
-                                   value="Describe the action taken to resolve this alert...")
-resolved = form1.form_submit_button("Mark as Resolved")
-
-if resolved:
-    st.success(f"Alert '{alert_to_resolve}' marked as resolved with action: '{resolution_action}'")
-
-st.subheader('Suspicious Activity')
-suspicious_data = {
-    "Timestamp": ["2025-03-25 20:10:44", "2025-03-25 19:58:10"],
-    "IP address": ["192.168.1.45", "10.24.55.82"],
-    "Activity": ["Failed Login Attempt", "Unusual Data Access"],
-    "Status": ["Flagged", "Blocked"]
-}
-suspicious_df = pd.DataFrame(suspicious_data)
-st.dataframe(suspicious_df)
-
-st.subheader('Handle Suspicious Activity')
-form2 = st.form(key="suspicious_activity_form")
-activity_to_handle = form2.selectbox("Select Activity to Handle", 
-                                   ["Failed Login Attempt (192.168.1.45)", "Unusual Data Access (10.24.55.82)"])
-action = form2.selectbox("Action", ["Ignore", "Block IP", "Investigate", "Reset User Account"])
-notes = form2.text_area("Notes", height=100, 
-                       value="Add notes about this suspicious activity...")
-handled = form2.form_submit_button("Submit Action")
-
-if handled:
-    st.success(f"Action '{action}' taken for activity: '{activity_to_handle}'")
-
-st.subheader('Resource Usage')
-usage_data = {
-    "Module": ["Student Portal", "RA Portal", "Housing Admin", "System Admin", "Matching Algorithm"],
-    "Usage (%)": [45, 30, 15, 5, 5]
-}
-usage_df = pd.DataFrame(usage_data)
-st.dataframe(usage_df)
-
-st.subheader('Database Performance')
-db_data = {
-    "Metric": ["Average query response time", "Database size", "Connections"],
-    "Value": ["35ms", "1.2 GB", "42 active / 100 maximum"]
-}
-db_df = pd.DataFrame(db_data)
-st.dataframe(db_df)
+if not data_access_logs.empty:
+    # Filter options
+    access_types = ["All"] + data_access_logs["accessType"].unique().tolist()
+    selected_access_type = st.selectbox("Filter by Access Type:", access_types)
+    
+    # Apply filter
+    if selected_access_type != "All":
+        filtered_logs = data_access_logs[data_access_logs["accessType"] == selected_access_type]
+    else:
+        filtered_logs = data_access_logs
+    
+    # Show data
+    st.dataframe(filtered_logs, use_container_width=True)
+    
+    # Visualization of data access by type
+    if not data_access_logs.empty:
+        access_counts = data_access_logs["accessType"].value_counts()
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.pie(access_counts, labels=access_counts.index, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')
+        ax.set_title("Data Access by Type")
+        st.pyplot(fig)
+else:
+    st.info("No data access logs available.")
 
 if st.button('Back to Admin Home', use_container_width=True):
     st.switch_page('pages/30_Administrator_Home.py')
