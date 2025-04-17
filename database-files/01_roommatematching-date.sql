@@ -241,7 +241,7 @@ INSERT INTO events VALUES
     ('2025-05-28 17:00:00', 'Tea Time', 'International House', 18),
     ('2025-05-27 19:00:00', 'Academic Panel', 'Classroom 101', 19),
     ('2025-05-30 18:30:00', 'Game Tournament', 'Game Room', 19),
-    ('2025-05-29 20:00:00', 'Stargazing', 'Centennial Common', 20),
+    -- ('2025-05-29 20:00:00', 'Stargazing', 'Centennial Common', 20),
     ('2025-06-01 15:00:00', 'Picnic', 'West Village Quad', 20),
     ('2025-06-02 18:00:00', 'Resume Workshop', 'Career Center', 21),
     ('2025-06-04 19:00:00', 'Painting Night', 'Art Studio', 21),
@@ -381,7 +381,7 @@ INSERT INTO RABridgeEvents VALUES
     (18, '2025-05-28 17:00:00', 'Tea Time'),
     (19, '2025-05-27 19:00:00', 'Academic Panel'),
     (19, '2025-05-30 18:30:00', 'Game Tournament'),
-    (20, '2025-05-29 20:00:00', 'Stargazing'),
+    -- (20, '2025-05-29 20:00:00', 'Stargazing'),
     (20, '2025-06-01 15:00:00', 'Picnic'),
     (21, '2025-06-02 18:00:00', 'Resume Workshop'),
     (21, '2025-06-04 19:00:00', 'Painting Night'),
@@ -421,7 +421,7 @@ INSERT INTO RABridgeEvents VALUES
     (17, '2025-05-21 18:00:00', 'Bowling Night'),
     (18, '2025-05-23 19:30:00', 'Comedy Night'),
     (19, '2025-05-25 18:00:00', 'Music Jam'),
-    (20, '2025-05-29 20:00:00', 'Stargazing'),
+    -- (20, '2025-05-29 20:00:00', 'Stargazing'),
     (21, '2025-06-03 17:30:00', 'Volleyball Game'),
     (22, '2025-06-02 18:00:00', 'Resume Workshop'),
     (23, '2025-06-07 20:00:00', 'Cooking Contest'),
@@ -451,14 +451,14 @@ INSERT INTO RABridgeComplaints VALUES
     (18, 106), (19, 107), (20, 108), (21, 109), (22, 110),
     (23, 111), (24, 112), (25, 113), (26, 114), (27, 115),
     (28, 116), (29, 117), (30, 118), (1, 119), (2, 120),
-    (3, 121), (4, 122), (5, 123), (6, 124), (7, 125),
+    -- (3, 121), (4, 122), (5, 123), (6, 124), (7, 125),
     (8, 126), (9, 127), (10, 128), (11, 129), (12, 130),
     (13, 131), (14, 132), (15, 133), (16, 134), (17, 135),
     (18, 136), (19, 137), (20, 138), (21, 139), (22, 140),
     (23, 141), (24, 142), (25, 143), (26, 144), (27, 145),
     (28, 146), (29, 147), (30, 148), (1, 149), (2, 150),
-    (3, 151), (4, 152), (5, 153), (6, 154), (7, 155),
-    (8, 156), (9, 157), (10, 158), (11, 159), (12, 160);
+    (3, 151), (4, 152), (5, 153), (6, 154), (7, 155);
+    -- (8, 156), (9, 157), (10, 158), (11, 159), (12, 160);
 
 -- Housing Admins (10 admins) - Strong entity
 INSERT INTO housingAdmin VALUES
@@ -499,8 +499,8 @@ INSERT INTO conflicts_student VALUES
     (236, 22), (236, 24), (237, 26), (237, 28), (238, 30), (238, 32), (239, 34), (239, 36), (240, 38), (240, 40),
     (241, 1), (241, 5), (242, 10), (242, 15), (243, 20), (243, 25), (244, 30), (244, 35), (245, 40), (245, 1),
     (246, 6), (246, 11), (247, 16), (247, 21), (248, 26), (248, 31), (249, 36), (249, 2), (250, 7), (250, 12),
-    (251, 17), (251, 22), (252, 27), (252, 32), (253, 37), (253, 3), (254, 8), (254, 13), (255, 18), (255, 23),
-    (201, 28), (202, 33), (203, 38), (204, 4), (205, 9), (206, 14), (207, 19), (208, 24), (209, 29), (210, 34);
+    (251, 17), (251, 22), (252, 27), (252, 32), (253, 37), (253, 3), (254, 8), (254, 13), (255, 18), (255, 23);
+    -- (201, 28), (202, 33), (203, 38), (204, 4), (205, 9), (206, 14), (207, 19), (208, 24), (209, 29), (210, 34);
 
 -- Dorm-HousingAdmin Bridge (30 relationships) - Bridge table
 INSERT INTO dormBuildingBridgeHousingAdmin VALUES
@@ -571,10 +571,10 @@ INSERT INTO systemAdminBridgeClearanceLevel VALUES
     (101, 5), (102, 5), (103, 5), (104, 5), (105, 5), (106, 5), (107, 5), (108, 5), (109, 5), (110, 5),
     (111, 6), (112, 6), (113, 6), (114, 6), (115, 6), (116, 6), (117, 6), (118, 6), (119, 6), (120, 6),
     (121, 7), (122, 7), (123, 7), (124, 7), (125, 7), (126, 7), (127, 7), (128, 7), (129, 7), (130, 7),
-    (131, 8), (132, 8), (133, 8), (134, 8), (135, 8), (136, 8), (137, 8), (138, 8), (139, 8), (140, 8),
-    (101, 2), (102, 3), (103, 4), (104, 5), (105, 6), (106, 7), (107, 8), (108, 1), (109, 2), (110, 3),
-    (111, 4), (112, 5), (113, 6), (114, 7), (115, 8), (116, 1), (117, 2), (118, 3), (119, 4), (120, 5),
-    (121, 6), (122, 7), (123, 8), (124, 1), (125, 2), (126, 3), (127, 4), (128, 5), (129, 6), (130, 7);
+    (131, 8), (132, 8), (133, 8), (134, 8), (135, 8), (136, 8), (137, 8), (138, 8), (139, 8), (140, 8);
+    -- (101, 2), (102, 3), (103, 4), (104, 5), (105, 6), (106, 7), (107, 8), (108, 1), (109, 2), (110, 3),
+    -- (111, 4), (112, 5), (113, 6), (114, 7), (115, 8), (116, 1), (117, 2), (118, 3), (119, 4), (120, 5),
+    -- (121, 6), (122, 7), (123, 8), (124, 1), (125, 2), (126, 3), (127, 4), (128, 5), (129, 6), (130, 7);
 
 -- SystemAdmin-HousingAdmin Bridge (40 relationships) - Bridge table
 INSERT INTO systemAdminBridgeHousingAdmin VALUES
@@ -602,208 +602,208 @@ INSERT INTO systemAdminBridgeConflicts VALUES
     (5, 231), (5, 233), (5, 235), (5, 237), (5, 239), (6, 241), (6, 243), (6, 245), (6, 247), (6, 249),
     (7, 251), (7, 252), (7, 253), (7, 254), (7, 255), (8, 201), (8, 203), (8, 205), (8, 207), (8, 209);
 
--- Create table for tracking login attempts
-CREATE TABLE login_attempts (
-    attemptId INT AUTO_INCREMENT,
-    userId INT,
-    timestamp DATETIME,
-    success BOOLEAN,
-    ipAddress VARCHAR(15),
-    PRIMARY KEY (attemptId)
-);
+-- -- Create table for tracking login attempts
+-- CREATE TABLE login_attempts (
+--     attemptId INT AUTO_INCREMENT,
+--     userId INT,
+--     timestamp DATETIME,
+--     success BOOLEAN,
+--     ipAddress VARCHAR(15),
+--     PRIMARY KEY (attemptId)
+-- );
 
--- Insert sample login attempts
-INSERT INTO login_attempts (userId, timestamp, success, ipAddress) VALUES
-    (101, '2025-04-15 08:45:22', 0, '192.168.1.45'),
-    (101, '2025-04-15 08:47:15', 0, '192.168.1.45'),
-    (101, '2025-04-15 08:48:30', 0, '192.168.1.45'),
-    (101, '2025-04-15 08:49:45', 0, '192.168.1.45'),
-    (101, '2025-04-15 08:51:12', 1, '192.168.1.45'),
-    (102, '2025-04-15 10:22:18', 0, '10.24.55.82'),
-    (102, '2025-04-15 10:24:32', 0, '10.24.55.82'),
-    (102, '2025-04-15 10:26:45', 0, '10.24.55.82'),
-    (102, '2025-04-15 10:28:17', 1, '10.24.55.82'),
-    (103, '2025-04-15 14:11:05', 0, '172.16.8.201'),
-    (103, '2025-04-15 14:12:30', 0, '172.16.8.201'),
-    (103, '2025-04-15 14:13:45', 0, '172.16.8.201'),
-    (103, '2025-04-15 14:14:22', 1, '172.16.8.201');
+-- -- Insert sample login attempts
+-- INSERT INTO login_attempts (userId, timestamp, success, ipAddress) VALUES
+--     (101, '2025-04-15 08:45:22', 0, '192.168.1.45'),
+--     (101, '2025-04-15 08:47:15', 0, '192.168.1.45'),
+--     (101, '2025-04-15 08:48:30', 0, '192.168.1.45'),
+--     (101, '2025-04-15 08:49:45', 0, '192.168.1.45'),
+--     (101, '2025-04-15 08:51:12', 1, '192.168.1.45'),
+--     (102, '2025-04-15 10:22:18', 0, '10.24.55.82'),
+--     (102, '2025-04-15 10:24:32', 0, '10.24.55.82'),
+--     (102, '2025-04-15 10:26:45', 0, '10.24.55.82'),
+--     (102, '2025-04-15 10:28:17', 1, '10.24.55.82'),
+--     (103, '2025-04-15 14:11:05', 0, '172.16.8.201'),
+--     (103, '2025-04-15 14:12:30', 0, '172.16.8.201'),
+--     (103, '2025-04-15 14:13:45', 0, '172.16.8.201'),
+--     (103, '2025-04-15 14:14:22', 1, '172.16.8.201');
 
--- Create table for tracking data access
-CREATE TABLE data_access_log (
-    logId INT AUTO_INCREMENT,
-    userId INT,
-    dataResource VARCHAR(50),
-    accessType VARCHAR(10), -- 'READ', 'WRITE', 'DELETE'
-    timestamp DATETIME,
-    ipAddress VARCHAR(15),
-    PRIMARY KEY (logId)
-);
+-- -- Create table for tracking data access
+-- CREATE TABLE data_access_log (
+--     logId INT AUTO_INCREMENT,
+--     userId INT,
+--     dataResource VARCHAR(50),
+--     accessType VARCHAR(10), -- 'READ', 'WRITE', 'DELETE'
+--     timestamp DATETIME,
+--     ipAddress VARCHAR(15),
+--     PRIMARY KEY (logId)
+-- );
 
--- Insert sample data access logs
-INSERT INTO data_access_log (userId, dataResource, accessType, timestamp, ipAddress) VALUES
-    (104, 'student_records', 'READ', '2025-04-15 09:22:15', '10.1.5.23'),
-    (108, 'complaints', 'READ', '2025-04-15 10:45:32', '10.1.5.24'),
-    (104, 'conflicts', 'WRITE', '2025-04-15 11:12:47', '10.1.5.23'),
-    (116, 'housingAdmin', 'READ', '2025-04-15 13:35:21', '10.1.5.25'),
-    (132, 'student_records', 'WRITE', '2025-04-15 14:22:18', '10.1.5.26'),
-    (128, 'preferences', 'READ', '2025-04-15 15:50:33', '10.1.5.27'),
-    (104, 'dorm_room', 'WRITE', '2025-04-15 16:42:31', '10.1.5.23'),
-    (140, 'events', 'READ', '2025-04-15 17:15:42', '10.1.5.28'),
-    (120, 'applications', 'WRITE', '2025-04-15 09:33:15', '10.1.5.29'),
-    (112, 'clearanceLevels', 'READ', '2025-04-15 10:17:22', '10.1.5.30');
+-- -- Insert sample data access logs
+-- INSERT INTO data_access_log (userId, dataResource, accessType, timestamp, ipAddress) VALUES
+--     (104, 'student_records', 'READ', '2025-04-15 09:22:15', '10.1.5.23'),
+--     (108, 'complaints', 'READ', '2025-04-15 10:45:32', '10.1.5.24'),
+--     (104, 'conflicts', 'WRITE', '2025-04-15 11:12:47', '10.1.5.23'),
+--     (116, 'housingAdmin', 'READ', '2025-04-15 13:35:21', '10.1.5.25'),
+--     (132, 'student_records', 'WRITE', '2025-04-15 14:22:18', '10.1.5.26'),
+--     (128, 'preferences', 'READ', '2025-04-15 15:50:33', '10.1.5.27'),
+--     (104, 'dorm_room', 'WRITE', '2025-04-15 16:42:31', '10.1.5.23'),
+--     (140, 'events', 'READ', '2025-04-15 17:15:42', '10.1.5.28'),
+--     (120, 'applications', 'WRITE', '2025-04-15 09:33:15', '10.1.5.29'),
+--     (112, 'clearanceLevels', 'READ', '2025-04-15 10:17:22', '10.1.5.30');
 
--- Create table for tracking system maintenance
-CREATE TABLE system_maintenance (
-    maintenanceId INT AUTO_INCREMENT,
-    type VARCHAR(50),
-    scheduleTime DATETIME, 
-    completionTime DATETIME,
-    status VARCHAR(20),
-    details VARCHAR(200),
-    PRIMARY KEY (maintenanceId)
-);
+-- -- Create table for tracking system maintenance
+-- CREATE TABLE system_maintenance (
+--     maintenanceId INT AUTO_INCREMENT,
+--     type VARCHAR(50),
+--     scheduleTime DATETIME, 
+--     completionTime DATETIME,
+--     status VARCHAR(20),
+--     details VARCHAR(200),
+--     PRIMARY KEY (maintenanceId)
+-- );
 
--- Insert sample maintenance records
-INSERT INTO system_maintenance (type, scheduleTime, completionTime, status, details) VALUES
-    ('Database Backup', '2025-04-15 02:00:00', '2025-04-15 02:15:22', 'Completed', 'Routine daily backup'),
-    ('Security Update', '2025-04-10 01:00:00', '2025-04-10 03:25:14', 'Completed', 'April security patches'),
-    ('System Restart', '2025-04-05 02:00:00', '2025-04-05 02:10:45', 'Completed', 'Monthly maintenance restart'),
-    ('Database Optimization', '2025-04-01 01:30:00', '2025-04-01 02:45:12', 'Completed', 'Index rebuilding and table optimization'),
-    ('Backup Verification', '2025-03-25 03:00:00', '2025-03-25 04:15:33', 'Completed', 'Quarterly backup integrity check');
+-- -- Insert sample maintenance records
+-- INSERT INTO system_maintenance (type, scheduleTime, completionTime, status, details) VALUES
+--     ('Database Backup', '2025-04-15 02:00:00', '2025-04-15 02:15:22', 'Completed', 'Routine daily backup'),
+--     ('Security Update', '2025-04-10 01:00:00', '2025-04-10 03:25:14', 'Completed', 'April security patches'),
+--     ('System Restart', '2025-04-05 02:00:00', '2025-04-05 02:10:45', 'Completed', 'Monthly maintenance restart'),
+--     ('Database Optimization', '2025-04-01 01:30:00', '2025-04-01 02:45:12', 'Completed', 'Index rebuilding and table optimization'),
+--     ('Backup Verification', '2025-03-25 03:00:00', '2025-03-25 04:15:33', 'Completed', 'Quarterly backup integrity check');
 
--- Create table for permissions audit
-CREATE TABLE permission_changes (
-    changeId INT AUTO_INCREMENT,
-    timestamp DATETIME,
-    changedBy INT,
-    targetUser INT,
-    action VARCHAR(100),
-    oldRole VARCHAR(30),
-    newRole VARCHAR(30),
-    PRIMARY KEY (changeId)
-);
+-- -- Create table for permissions audit
+-- CREATE TABLE permission_changes (
+--     changeId INT AUTO_INCREMENT,
+--     timestamp DATETIME,
+--     changedBy INT,
+--     targetUser INT,
+--     action VARCHAR(100),
+--     oldRole VARCHAR(30),
+--     newRole VARCHAR(30),
+--     PRIMARY KEY (changeId)
+-- );
 
--- Insert sample permission changes
-INSERT INTO permission_changes (timestamp, changedBy, targetUser, action, oldRole, newRole) VALUES
-    ('2025-04-15 10:23:45', 104, 117, 'Changed role', 'Student', 'RA'),
-    ('2025-04-14 16:42:31', 104, 123, 'Added new user', NULL, 'Housing Admin'),
-    ('2025-04-13 14:15:22', 108, 131, 'Changed clearance level', 'RA', 'RA'),
-    ('2025-04-12 11:33:47', 116, 118, 'Deactivated account', 'Student', NULL),
-    ('2025-04-11 09:22:15', 128, 125, 'Changed role', 'RA', 'Housing Admin'),
-    ('2025-04-10 15:42:33', 104, 115, 'Changed clearance level', 'Student', 'Student'),
-    ('2025-04-09 14:17:28', 140, 112, 'Reactivated account', NULL, 'RA'),
-    ('2025-04-08 16:33:44', 116, 140, 'Changed role', 'RA', 'System Admin');
+-- -- Insert sample permission changes
+-- INSERT INTO permission_changes (timestamp, changedBy, targetUser, action, oldRole, newRole) VALUES
+--     ('2025-04-15 10:23:45', 104, 117, 'Changed role', 'Student', 'RA'),
+--     ('2025-04-14 16:42:31', 104, 123, 'Added new user', NULL, 'Housing Admin'),
+--     ('2025-04-13 14:15:22', 108, 131, 'Changed clearance level', 'RA', 'RA'),
+--     ('2025-04-12 11:33:47', 116, 118, 'Deactivated account', 'Student', NULL),
+--     ('2025-04-11 09:22:15', 128, 125, 'Changed role', 'RA', 'Housing Admin'),
+--     ('2025-04-10 15:42:33', 104, 115, 'Changed clearance level', 'Student', 'Student'),
+--     ('2025-04-09 14:17:28', 140, 112, 'Reactivated account', NULL, 'RA'),
+--     ('2025-04-08 16:33:44', 116, 140, 'Changed role', 'RA', 'System Admin');
 
--- Sample queries for different personas
+-- -- Sample queries for different personas
 
--- View dorm locations and availability (Bob - Student)
-SELECT dormId, name, address, numRooms, occupancy, maxCapacity, bedsAvailable, amenities 
-FROM dormBuilding;
+-- -- View dorm locations and availability (Bob - Student)
+-- SELECT dormId, name, address, numRooms, occupancy, maxCapacity, bedsAvailable, amenities 
+-- FROM dormBuilding;
 
--- View detailed information about each dorm (Bob - Student)
-SELECT d.dormId, d.name, d.address, d.numRooms, d.occupancy, d.bedsAvailable, d.amenities,
-       COUNT(dr.roomNum) as occupied_rooms
-FROM dormBuilding d
-JOIN dorm_room dr ON d.dormId = dr.dormId
-WHERE dr.stuId IS NOT NULL
-GROUP BY d.dormId;
+-- -- View detailed information about each dorm (Bob - Student)
+-- SELECT d.dormId, d.name, d.address, d.numRooms, d.occupancy, d.bedsAvailable, d.amenities,
+--        COUNT(dr.roomNum) as occupied_rooms
+-- FROM dormBuilding d
+-- JOIN dorm_room dr ON d.dormId = dr.dormId
+-- WHERE dr.stuId IS NOT NULL
+-- GROUP BY d.dormId;
 
--- Access resident contact info for an RA (Renee - RA)
-SELECT s.stuId, s.firstName, s.lastName, e.email
-FROM student s
-JOIN student_email e ON s.stuId = e.stuId
-JOIN studentBridgeRA sr ON s.stuId = sr.stuId
-WHERE sr.raId = 1;
+-- -- Access resident contact info for an RA (Renee - RA)
+-- SELECT s.stuId, s.firstName, s.lastName, e.email
+-- FROM student s
+-- JOIN student_email e ON s.stuId = e.stuId
+-- JOIN studentBridgeRA sr ON s.stuId = sr.stuId
+-- WHERE sr.raId = 1;
 
--- View anonymous complaints from students (Renee - RA)
-SELECT c.compId, c.description
-FROM complaints c
-JOIN RABridgeComplaints rc ON c.compId = rc.compId
-WHERE rc.raId = 1;
+-- -- View anonymous complaints from students (Renee - RA)
+-- SELECT c.compId, c.description
+-- FROM complaints c
+-- JOIN RABridgeComplaints rc ON c.compId = rc.compId
+-- WHERE rc.raId = 1;
 
--- View overview of complaints and events (Renee - RA)
-SELECT c.compId, c.description, e.title, e.datetime
-FROM complaints c
-JOIN RABridgeComplaints rc ON c.compId = rc.compId
-JOIN events e ON rc.raId = e.raId
-WHERE rc.raId = 1
-ORDER BY e.datetime;
+-- -- View overview of complaints and events (Renee - RA)
+-- SELECT c.compId, c.description, e.title, e.datetime
+-- FROM complaints c
+-- JOIN RABridgeComplaints rc ON c.compId = rc.compId
+-- JOIN events e ON rc.raId = e.raId
+-- WHERE rc.raId = 1
+-- ORDER BY e.datetime;
 
--- View all events for an RA in calendar order (Renee - RA)
-SELECT e.title, e.datetime, e.location 
-FROM events e
-JOIN RABridgeEvents re ON e.datetime = re.datetime AND e.title = re.title
-WHERE re.raId = 1 
-ORDER BY e.datetime ASC;
+-- -- View all events for an RA in calendar order (Renee - RA)
+-- SELECT e.title, e.datetime, e.location 
+-- FROM events e
+-- JOIN RABridgeEvents re ON e.datetime = re.datetime AND e.title = re.title
+-- WHERE re.raId = 1 
+-- ORDER BY e.datetime ASC;
 
--- Count of roommate conflicts per dorm (Jane - Housing Admin)
-SELECT db.dormId, db.name, COUNT(cs.confId) AS conflict_count
-FROM dormBuilding db
-JOIN dorm_room dr ON db.dormId = dr.dormId
-JOIN conflicts_student cs ON cs.studentId = dr.stuId
-JOIN conflicts c ON c.confId = cs.confId
-GROUP BY db.dormId, db.name
-ORDER BY conflict_count DESC;
+-- -- Count of roommate conflicts per dorm (Jane - Housing Admin)
+-- SELECT db.dormId, db.name, COUNT(cs.confId) AS conflict_count
+-- FROM dormBuilding db
+-- JOIN dorm_room dr ON db.dormId = dr.dormId
+-- JOIN conflicts_student cs ON cs.studentId = dr.stuId
+-- JOIN conflicts c ON c.confId = cs.confId
+-- GROUP BY db.dormId, db.name
+-- ORDER BY conflict_count DESC;
 
--- View roommate match success rates per dorm (Jane - Housing Admin)
-SELECT db.dormId, db.name, 
-       COUNT(DISTINCT dr.stuId) AS total_students,
-       COUNT(DISTINCT cs.confId) AS conflicts,
-       (1 - (COUNT(DISTINCT cs.confId) / COUNT(DISTINCT dr.stuId))) * 100 AS success_rate
-FROM dormBuilding db
-LEFT JOIN dorm_room dr ON db.dormId = dr.dormId
-LEFT JOIN conflicts_student cs ON cs.studentId = dr.stuId
-WHERE dr.stuId IS NOT NULL
-GROUP BY db.dormId, db.name
-ORDER BY success_rate DESC;
+-- -- View roommate match success rates per dorm (Jane - Housing Admin)
+-- SELECT db.dormId, db.name, 
+--        COUNT(DISTINCT dr.stuId) AS total_students,
+--        COUNT(DISTINCT cs.confId) AS conflicts,
+--        (1 - (COUNT(DISTINCT cs.confId) / COUNT(DISTINCT dr.stuId))) * 100 AS success_rate
+-- FROM dormBuilding db
+-- LEFT JOIN dorm_room dr ON db.dormId = dr.dormId
+-- LEFT JOIN conflicts_student cs ON cs.studentId = dr.stuId
+-- WHERE dr.stuId IS NOT NULL
+-- GROUP BY db.dormId, db.name
+-- ORDER BY success_rate DESC;
 
--- Summary report of dorm building stats (Jane - Housing Admin)
-SELECT db.dormId, db.name, db.numRooms, db.occupancy, db.maxCapacity, db.bedsAvailable,
-       (db.occupancy / db.maxCapacity) * 100 AS occupancy_rate
-FROM dormBuilding db
-ORDER BY occupancy_rate DESC;
+-- -- Summary report of dorm building stats (Jane - Housing Admin)
+-- SELECT db.dormId, db.name, db.numRooms, db.occupancy, db.maxCapacity, db.bedsAvailable,
+--        (db.occupancy / db.maxCapacity) * 100 AS occupancy_rate
+-- FROM dormBuilding db
+-- ORDER BY occupancy_rate DESC;
 
--- View all users and their roles/clearance levels (Sam - System Admin)
-SELECT cl.userId, cl.role, cl.clearance,
-       CASE 
-         WHEN cl.role = 'RA' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM RA WHERE raId = cl.userId)
-         WHEN cl.role = 'HA' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM housingAdmin WHERE haId = cl.userId)
-         WHEN cl.role = 'Student' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM student WHERE stuId = cl.userId)
-         WHEN cl.role = 'SystemAdmin' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM systemAdmin WHERE adminId = cl.userId)
-         ELSE 'Unknown'
-       END AS fullName
-FROM clearanceLevels cl
-ORDER BY cl.role, cl.clearance;
+-- -- View all users and their roles/clearance levels (Sam - System Admin)
+-- SELECT cl.userId, cl.role, cl.clearance,
+--        CASE 
+--          WHEN cl.role = 'RA' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM RA WHERE raId = cl.userId)
+--          WHEN cl.role = 'HA' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM housingAdmin WHERE haId = cl.userId)
+--          WHEN cl.role = 'Student' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM student WHERE stuId = cl.userId)
+--          WHEN cl.role = 'SystemAdmin' THEN (SELECT CONCAT(firstName, ' ', lastName) FROM systemAdmin WHERE adminId = cl.userId)
+--          ELSE 'Unknown'
+--        END AS fullName
+-- FROM clearanceLevels cl
+-- ORDER BY cl.role, cl.clearance;
 
--- View system admins and the complaints they can access (Sam - System Admin)
-SELECT sa.adminId, sa.firstName, sa.lastName, COUNT(sc.confId) AS accessible_conflicts
-FROM systemAdmin sa
-LEFT JOIN systemAdminBridgeConflicts sc ON sa.adminId = sc.adminId
-GROUP BY sa.adminId, sa.firstName, sa.lastName
-ORDER BY accessible_conflicts DESC;
+-- -- View system admins and the complaints they can access (Sam - System Admin)
+-- SELECT sa.adminId, sa.firstName, sa.lastName, COUNT(sc.confId) AS accessible_conflicts
+-- FROM systemAdmin sa
+-- LEFT JOIN systemAdminBridgeConflicts sc ON sa.adminId = sc.adminId
+-- GROUP BY sa.adminId, sa.firstName, sa.lastName
+-- ORDER BY accessible_conflicts DESC;
 
--- View recent suspicious login activity (Sam - System Admin)
-SELECT userId, 
-       COUNT(*) AS failed_attempts, 
-       MAX(timestamp) AS last_attempt,
-       ipAddress
-FROM login_attempts
-WHERE success = 0
-GROUP BY userId, ipAddress
-HAVING COUNT(*) > 2
-ORDER BY failed_attempts DESC;
+-- -- View recent suspicious login activity (Sam - System Admin)
+-- SELECT userId, 
+--        COUNT(*) AS failed_attempts, 
+--        MAX(timestamp) AS last_attempt,
+--        ipAddress
+-- FROM login_attempts
+-- WHERE success = 0
+-- GROUP BY userId, ipAddress
+-- HAVING COUNT(*) > 2
+-- ORDER BY failed_attempts DESC;
 
--- View system maintenance schedule (Sam - System Admin)
-SELECT type, scheduleTime, completionTime, status, details,
-       TIMESTAMPDIFF(MINUTE, scheduleTime, completionTime) AS duration_minutes
-FROM system_maintenance
-ORDER BY scheduleTime DESC;
+-- -- View system maintenance schedule (Sam - System Admin)
+-- SELECT type, scheduleTime, completionTime, status, details,
+--        TIMESTAMPDIFF(MINUTE, scheduleTime, completionTime) AS duration_minutes
+-- FROM system_maintenance
+-- ORDER BY scheduleTime DESC;
 
--- View recent permission changes (Sam - System Admin)
-SELECT pc.timestamp, 
-       pc.action,
-       (SELECT CONCAT(firstName, ' ', lastName) FROM systemAdmin WHERE adminId = pc.changedBy) AS changed_by,
-       pc.oldRole,
-       pc.newRole
-FROM permission_changes pc
-ORDER BY pc.timestamp DESC;
+-- -- View recent permission changes (Sam - System Admin)
+-- SELECT pc.timestamp, 
+--        pc.action,
+--        (SELECT CONCAT(firstName, ' ', lastName) FROM systemAdmin WHERE adminId = pc.changedBy) AS changed_by,
+--        pc.oldRole,
+--        pc.newRole
+-- FROM permission_changes pc
+-- ORDER BY pc.timestamp DESC;
