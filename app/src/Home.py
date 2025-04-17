@@ -26,16 +26,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-#adding copyright
-st.markdown(
-    """
-    <div style="text-align: center; font-size: 12px; color: gray; margin-top: 50px;">
-        © 2025 Matchmaker Inc.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 
 # If a user is at this page, we assume they are not 
 # authenticated.  So we change the 'authenticated' value
@@ -102,3 +92,24 @@ if st.button('Act as System Administrator',
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'Sam'
     st.switch_page('pages/30_Administrator_Home.py')
+
+    #copyright on the bottom
+    st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+        color: gray;
+    }
+    </style>
+    <div class="footer">
+        © 2025 Matchmaker Inc.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
