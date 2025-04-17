@@ -26,6 +26,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+#adding copyright
+st.markdown(
+    """
+    <div style="text-align: center; font-size: 12px; color: gray; margin-top: 50px;">
+        © 2025 Matchmaker Inc.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # If a user is at this page, we assume they are not 
 # authenticated.  So we change the 'authenticated' value
 # in the streamlit session_state to false. 
