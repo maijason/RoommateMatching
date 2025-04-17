@@ -28,9 +28,27 @@ with st.form("preferences_form"):
         value=default_sleep_time
     )
     
-    cleanliness = st.number_input("Preferred cleanliness on a scale from 1 (messy) to 5 (very clean)", min_value=1, max_value=5, step=1)
-    smoking = st.radio("I would prefer to live with someone who does not smoke", ["No", "Yes"])
-    extra_observations = st.text_area("Please write here any extra observations")
+    default_cleanliness = 3
+    cleanliness = st.number_input(
+        "Preferred cleanliness on a scale from 1 (messy) to 5 (very clean)", 
+        min_value=1, 
+        max_value=5, 
+        step=1,
+        value=default_cleanliness
+    )
+
+    default_smoking = "Yes" if existing_preferences and existing_preferences.get('smoking') else "No"
+    smoking = st.radio(
+        "Do you smoke or allow smoking?", 
+        ["No", "Yes"],
+        index=0 if default_smoking == "No" else 1
+    )
+
+    default_notes = existing_preferences.get('extra_observations', "") if existing_preferences else ""
+    extra_observations = st.text_area(
+        "Please write here any extra observations",
+        value=default_notes
+    )
 
     submitted = st.form_submit_button("Submit Preferences")
 
