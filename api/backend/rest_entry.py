@@ -52,6 +52,9 @@ def create_app():
     app.register_blueprint(students,    url_prefix='/s')
     app.register_blueprint(dorms,    url_prefix='/d')
     app.register_blueprint(system_admin,    url_prefix='/admin')
+    app.register_blueprint(events,   url_prefix='/events')
+    app.register_blueprint(ra,          url_prefix='/ra')
+    app.register_blueprint(housing_admin, url_prefix='/housing')
 
     # Don't forget to return the app object
     return app
