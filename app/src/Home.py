@@ -17,6 +17,15 @@ from modules.nav import SideBarLinks
 # are organized/displayed on the screen).
 st.set_page_config(layout = 'wide')
 
+st.markdown(
+    """
+    <div style="background-color: #FF4B4B; height: 80px; width: 100%; padding: 20px; border-radius: 0 0 12px 12px; text-align: center;">
+        <span style="color: white; font-size: 36px; font-weight: bold;">Roomies 4 Life</span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # If a user is at this page, we assume they are not 
 # authenticated.  So we change the 'authenticated' value
 # in the streamlit session_state to false. 
@@ -34,7 +43,6 @@ SideBarLinks(show_home=True)
 
 # set the title of the page and provide a simple prompt. 
 logger.info("Loading the Home page of the app")
-st.title('Roomies 4 Life')
 st.write('\n\n')
 st.write('### HI! As which user would you like to log in?')
 
@@ -83,6 +91,3 @@ if st.button('Act as System Administrator',
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'Sam'
     st.switch_page('pages/30_Administrator_Home.py')
-
-
-
