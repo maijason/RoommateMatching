@@ -1,13 +1,14 @@
 import streamlit as st
 import requests
 from datetime import time
+from modules.nav import SideBarLinks
 
 st.set_page_config(page_title="Roommate Preferences Survey", layout="centered")
+SideBarLinks()
 st.title("Roommate Preferences Survey")
 
 student_id = st.session_state["id"]
 
-st.dataframe(requests.get(f"http://api:4000/s/{student_id}/preferences").json())
 
 existing_preferences = None
 try:

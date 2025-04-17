@@ -121,3 +121,19 @@ def add_complaint(id):
     response = make_response("complaints submitted successfully!")
     response.status_code = 201
     return response
+
+@dorms.route('/dorms', methods=['GET'])
+def get_dorms():
+
+    cursor = db.get_db().cursor()
+    cursor.execute('''
+                    select * from dormBuilding
+    ''')
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+

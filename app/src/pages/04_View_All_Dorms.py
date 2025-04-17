@@ -11,7 +11,7 @@ SideBarLinks()
 st.write("# View All Dorms")
 
 try:
-    response = requests.get('http://api:4000/d/dorms')
+    response = requests.get('http://api:4000/s/dorms')
     response.raise_for_status()  # This will raise an exception for HTTP errors
     dorms = response.json()
     st.dataframe(dorms)

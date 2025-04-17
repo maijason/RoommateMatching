@@ -10,7 +10,7 @@ st.set_page_config(layout = 'wide')
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
-st.title(f'RA Dashboard {st.session_state["id"]}')
+st.title(f'RA Dashboard')
 
 st.header('My Students')
 
@@ -20,19 +20,6 @@ residents = requests.get(f'http://api:4000/ra/residents/{st.session_state["id"]}
 st.dataframe(residents)
 
 
-st.header('Complaints')
-
-# get complaints
-complaints = requests.get(f'http://api:4000/ra/complaints/{st.session_state["id"]}').json()
-
-
-st.dataframe(complaints)
-
-st.header('Conflicts')
-
-# get events
-events = requests.get(f'http://api:4000/ra/conflicts/{st.session_state["id"]}').json()
-st.dataframe(events)
 
 
 

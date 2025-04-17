@@ -14,7 +14,6 @@ def get_user_roles():
     query = '''
         SELECT cl.userId, cl.role, cl.clearance
         FROM clearanceLevels cl
-        ORDER BY cl.role, cl.clearance DESC
     '''
     
     cursor = db.get_db().cursor()
