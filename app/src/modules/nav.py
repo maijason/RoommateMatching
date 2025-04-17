@@ -14,7 +14,7 @@ def AboutPageNav():
     st.sidebar.page_link("pages/40_About.py", label="About", icon="🧠")
 
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
+#### ------------------------ Examples for Student ------------------------
 def SurveyFormNav():
     st.sidebar.page_link(
         "pages/01_Survey_Form.py", label="Survey", icon="👤"
@@ -39,7 +39,7 @@ def RoommateMatchingNav():
     st.sidebar.page_link("pages/05_Roommate_Matching.py", label="Roommate Matching", icon="🤝")
 
 
-## ------------------------ Examples for Role of usaid_worker ------------------------
+## ------------------------ Examples for RA ------------------------
 def RADashboardNav():
     st.sidebar.page_link("pages/11_RA_Dashboard.py", label="Dashboard", icon="🛜")
 
@@ -50,7 +50,7 @@ def EventOrganizerNav():
     )
 
 
-#### ------------------------ System Admin Role ------------------------
+#### ------------------------ Housing Admin Role ------------------------
 
 def AnalyticsNav():
     st.sidebar.page_link(
@@ -85,19 +85,17 @@ def SideBarLinks(show_home=False):
     # add a logo to the sidebar always
     st.sidebar.image("assets/logo.png", width=150)
 
-    # If there is no logged in user, redirect to the Home (Landing) page
+    # If there is no logged in user, redirect to the Home page
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
         st.switch_page("Home.py")
 
     if show_home:
-        # Show the Home page link (the landing page)
+        # Show the Home page link
         HomeNav()
 
-    # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
         if st.session_state["role"] == "student":
             SurveyFormNav()
             BuildingViewerNav()
