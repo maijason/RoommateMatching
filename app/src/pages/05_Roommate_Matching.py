@@ -26,7 +26,7 @@ student_id = st.session_state.get("id", 1)
 # if the student has set preferences
 has_preferences = False
 try:
-    pref_response = requests.get(f'http://api:4000/s/students/{student_id}/preferences')
+    pref_response = requests.get(f'http://web-api:4000/s/students/{student_id}/preferences')
     if pref_response.status_code == 200:
         preferences = pref_response.json()
         if preferences:
@@ -42,7 +42,7 @@ if not has_preferences:
 
 # get potential roommate matches 
 try:
-    response = requests.get(f'http://api:4000/d/roommates?student_id={student_id}')
+    response = requests.get(f'http://web-api:4000/d/roommates?student_id={student_id}')
     if response.status_code == 200:
         matches = response.json()
         
