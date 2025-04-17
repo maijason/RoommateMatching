@@ -19,9 +19,7 @@ housing_admin = Blueprint('housing_admin', __name__)
 def get_housing_admins():
     try:
         cursor = db.get_db().cursor()
-        cursor.execute('''
-            SELECT * FROM housingAdmin
-        ''')
+        cursor.execute('SELECT * FROM housingAdmin')
         
         theData = cursor.fetchall()
         
@@ -38,14 +36,14 @@ def get_dorm_capacity():
     try:
         query = '''
             SELECT 
-                d.dormId, 
-                d.dormName, 
-                d.numRooms, 
-                d.maxCapacity,
-                (SELECT COUNT(*) FROM dorm_room dr WHERE dr.dormId = d.dormId AND dr.stuId IS NOT NULL) as occupied,
-                d.maxCapacity - (SELECT COUNT(*) FROM dorm_room dr WHERE dr.dormId = d.dormId AND dr.stuId IS NOT NULL) as available
-            FROM dormBuilding d
-            ORDER BY d.dormName
+                dormId, 
+                dormName, 
+                numRooms, 
+                maxCapacity,
+                occupied,
+                maxCapacity - occupied as available
+            FROM dormBuilding
+            ORDER BY dormName
         '''
         
         cursor = db.get_db().cursor()
@@ -69,11 +67,7 @@ def update_dorm_capacity():
         dormId = the_data['dormId']
         maxCapacity = the_data['maxCapacity']
         
-        query = '''
-            UPDATE dormBuilding
-            SET maxCapacity = %s
-            WHERE dormId = %s
-        '''
+        query = 'UPDATE dormBuilding SET maxCapacity = %s WHERE dormId = %s'
         
         cursor = db.get_db().cursor()
         cursor.execute(query, (maxCapacity, dormId))
@@ -93,14 +87,10 @@ def get_conflicts_by_dorm():
     try:
         query = '''
             SELECT 
-                db.dormId,
-                db.dormName,
-                COUNT(c.confId) as conflict_count
-            FROM dormBuilding db
-            LEFT JOIN dorm_room dr ON db.dormId = dr.dormId
-            LEFT JOIN student s ON dr.stuId = s.stuId
-            LEFT JOIN conflicts c ON s.stuId = c.studentId
-            GROUP BY db.dormId, db.dormName
+                dormId,
+                dormName,
+                conflict_count
+            FROM dormBuilding_conflicts
             ORDER BY conflict_count DESC
         '''
         
@@ -121,10 +111,9 @@ def get_conflicts_over_time():
     try:
         query = '''
             SELECT 
-                DATE_FORMAT(c.timestamp, '%Y-%m-01') as month,
-                COUNT(c.confId) as conflict_count
-            FROM conflicts c
-            GROUP BY month
+                month,
+                conflict_count
+            FROM conflicts_by_month
             ORDER BY month
         '''
         
@@ -145,23 +134,9 @@ def get_match_success():
     try:
         query = '''
             SELECT
-                CASE 
-                    WHEN conflict_count = 0 THEN 'No Conflicts'
-                    WHEN conflict_count BETWEEN 1 AND 2 THEN 'Low Conflicts'
-                    WHEN conflict_count BETWEEN 3 AND 5 THEN 'Medium Conflicts'
-                    ELSE 'High Conflicts'
-                END as match_category,
-                COUNT(*) as room_count
-            FROM (
-                SELECT 
-                    dr.roomNum,
-                    COUNT(c.confId) as conflict_count
-                FROM dorm_room dr
-                LEFT JOIN student s ON dr.stuId = s.stuId
-                LEFT JOIN conflicts c ON s.stuId = c.studentId
-                GROUP BY dr.roomNum
-            ) as room_conflicts
-            GROUP BY match_category
+                match_category,
+                room_count
+            FROM roommate_match_success
         '''
         
         cursor = db.get_db().cursor()
