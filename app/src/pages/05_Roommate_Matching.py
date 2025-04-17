@@ -19,8 +19,21 @@ st.markdown(
     """
 )
 
-response = requests.get('http://api:4000/d/roommates')
-response.raise_for_status()  # This will raise an exception for HTTP errors
-roommates = response.json()
-    
-st.dataframe(roommates)
+student_id = st.session_state.get("id", 1)
+
+# if the student has set preferences
+has_preferences = False
+try:
+    pref_response = requests.get(f'http://api:4000/s/students/{student_id}/preferences')
+    if pref_response.status_code == 200:
+        preferences = pref_response.json()
+        if preferences:
+            has_preferences = True
+            st.success(f"Matching based on your preferences: Sleep time: {preferences[0]['sleepTime']}:00, Smoking: {'Yes' if preferences[0]['smoking'] else 'No'}")
+except requests.exceptions.RequestException as e:
+    st.error(f"Error checking preferences: {e}")
+
+if not has_preferences:
+    st.warning("You haven't set your preferences yet. Please fill out the survey form first for better matches.")
+    if st.button("Go to Survey Form"):
+        st.switch_page("pages/01_Survey_Form.py")
