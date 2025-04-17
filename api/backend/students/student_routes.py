@@ -122,7 +122,7 @@ def add_complaint(id):
     response.status_code = 201
     return response
 
-@dorms.route('/dorms', methods=['GET'])
+@students.route('/dorms', methods=['GET'])
 def get_dorms():
 
     cursor = db.get_db().cursor()
