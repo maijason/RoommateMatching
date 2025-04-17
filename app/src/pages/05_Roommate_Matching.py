@@ -15,6 +15,7 @@ st.write("# Roommate Matching")
 st.markdown(
     """
     This page displays potential roommate matches based on your preferences.
+    Matches are scored on a scale from 0-6, with 6 being the best possible match.
     """
 )
 
