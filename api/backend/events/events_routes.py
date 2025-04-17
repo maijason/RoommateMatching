@@ -49,3 +49,23 @@ def add_rsvp():
 
     # Send response
     return jsonify({"message": "RSVP submitted successfully!"}), 201
+
+# Delete an event
+@events_bp.route('/events/delete', methods=['DELETE'])
+def delete_event():
+    data = request.get_json()
+    title = data.get('title')
+    datetime_val = data.get('datetime')
+
+    current_app.logger.info(f"Deleting event: {title} at {datetime_val}")
+
+    cursor = db.get_db().cursor()
+    query = """
+        DELETE FROM events
+        WHERE title = %s AND datetime = %s
+    """
+    cursor.execute(query, (title, datetime_val))
+    db.get_db().commit()
+
+    return jsonify({"message": "Event deleted"}), 200
+

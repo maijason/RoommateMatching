@@ -46,7 +46,7 @@ def RADashboardNav():
 
 def EventOrganizerNav():
     st.sidebar.page_link(
-        "pages/12_Calendar.py", label="Calendar", icon="📈"
+        "pages/12_RA_Calendar.py", label="Calendar", icon="📈"
     )
 
 
