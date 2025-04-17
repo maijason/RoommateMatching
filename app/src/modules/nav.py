@@ -42,48 +42,34 @@ def PermissionsDashboard():
 #### ------------------------ Main Sidebar Function ------------------------
 def SideBarLinks(show_home=False):
     """
-    Controls which links appear on the sidebar based on the user's role.
+    Adds navigation links to the sidebar based on the user's role.
     """
-
-    # Show logo at the top
     st.sidebar.image("assets/logo.png", width=150)
 
-    # Make sure the user is authenticated
     if "authenticated" not in st.session_state:
-        st.session_state["authenticated"] = False
+        st.session_state.authenticated = False
         st.switch_page("Home.py")
 
-    # Optional: Show a link to the landing page
     if show_home:
         HomeNav()
 
-    # Show user profile info at the top
     if st.session_state["authenticated"]:
-        first_name = st.session_state.get("first_name", "User")
-        role = st.session_state.get("role", "Unknown").capitalize()
-        st.sidebar.markdown(f"**👤 {first_name}**  \n*{role}*", unsafe_allow_html=True)
-        st.sidebar.markdown("---")
-
-    # Role-specific navigation links
-    if st.session_state["authenticated"]:
-        role = st.session_state.get("role")
-
-        if role == "Student":
+        role = st.session_state.get("role", "")
+        
+        if role == "student":
             StudentNav()
-        elif role == "RA":
+        elif role == "ra":
             RADashboardNav()
             EventOrganizerNav()
-        elif role == "HA":
+        elif role == "ha":
             AnalyticsNav()
             ManagementDashboardNav()
-        elif role == "Administrator":
+        elif role == "administrator":
             SystemMetricsNav()
             PermissionsDashboard()
 
-    # Always show About
     AboutPageNav()
 
-    # Show logout
     if st.session_state["authenticated"]:
         if st.sidebar.button("Logout"):
             del st.session_state["role"]
