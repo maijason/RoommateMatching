@@ -15,37 +15,54 @@ def get_residents_for_ra(ra_id):
             JOIN studentBridgeRA sb ON sb.stuId = s.stuId
             WHERE sb.raId = %s
         """
-        cursor.execute(query)
+        cursor.execute(query, (ra_id))
         data = cursor.fetchall()
 
         residents = [
             {
-                "name": f"{data['firstName']} {data['lastName']}",
-                "email": data['email']
+                "name": f"{row['firstName']} {row['lastName']}",
+                "email": row['email']
             }
             for row in data
         ]
 
-        return jsonify(residents)
+        # print(data)
+        response_data = make_response(jsonify(residents))
+        response_data.status_code = 200
 
-@ra_bp.route('/complaints/<int:ra_id>', methods=['GET'])
+        return response_data
+
+@ra.route('/complaints/<int:ra_id>', methods=['GET'])
 def get_complaints_for_ra(ra_id):
         cursor = db.get_db().cursor()
 
         query = """
-            SELECT compId, description
-            FROM complaints
-            WHERE stuId IN (
-            SELECT stuId FROM studentBridgeRA WHERE raId = %s;
+            SELECT s.firstName, s.lastName, c.description
+            FROM complaints c
+            JOIN student s
+            ON c.stuId = s.stuId
+            WHERE c.stuId IN (
+                SELECT stuId FROM studentBridgeRA
+                WHERE raId = %s
+            )
+
         """
         cursor.execute(query, (ra_id,))
         data = cursor.fetchall()
         cursor.close()
 
-        return jsonify(data)
+        complaints = [
+            {
+                "name": f"{row['firstName']} {row['lastName']}",
+                "description": row['description']
+            }
+            for row in data
+        ]
+
+        return jsonify(complaints)
 
 
-@ra_bp.route('/events/<int:ra_id>', methods=['GET'])
+@ra.route('/events/<int:ra_id>', methods=['GET'])
 def get_events_for_ra(ra_id):
         cursor = db.get_db().cursor()
 
@@ -67,6 +84,8 @@ def get_events_for_ra(ra_id):
 @ra.route('/conflicts', methods=['GET'])
 def get_conflicts():
         cursor = db.get_db().cursor()
+
+        # get conflicts connected to my students
 
         query = """
             SELECT 
