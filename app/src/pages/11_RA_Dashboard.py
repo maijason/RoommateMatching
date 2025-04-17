@@ -23,15 +23,15 @@ st.dataframe(residents)
 st.header('Complaints')
 
 # get complaints
-complaints = requests.get(f'http://api-test:4000/ra/complaints/{st.session_state["id"]}').json()
+complaints = requests.get(f'http://api:4000/ra/complaints/{st.session_state["id"]}').json()
 
 
 st.dataframe(complaints)
 
-st.header('Events')
+st.header('Conflicts')
 
 # get events
-events = requests.get(f'http://api:4001/ra/events/{st.session_state["id"]}').json()
+events = requests.get(f'http://api:4000/ra/conflicts/{st.session_state["id"]}').json()
 st.dataframe(events)
 
 

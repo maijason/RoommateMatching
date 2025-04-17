@@ -9,7 +9,7 @@ events = Blueprint("events", __name__)
 
 #Get upcoming events
 @events.route("/upcoming", methods=["GET"])
-def get_upcoming_events():
+def getupcoming_events():
     query = """
         SELECT datetime, title, location 
         FROM events 
@@ -25,34 +25,8 @@ def get_upcoming_events():
     return response
 
 #  RSVP to an event
-@events.route('/rsvp', methods=['POST'])
-def add_rsvp():
-    # Collect data from the request body
-    the_data = request.json
-    current_app.logger.info(the_data)
-
-    # Extract fields
-    stu_id = the_data['stuId']
-    datetime = the_data['datetime']
-    title = the_data['title']
-
-    # Build the SQL query using string interpolation 
-    query = f'''
-        INSERT INTO studentBridgeEvents (stuId, datetime, title)
-        VALUES ({stu_id}, '{datetime}', '{title}')
-    '''
-
-    # Execute the query
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db().commit()
-
-    # Send response
-    return jsonify({"message": "RSVP submitted successfully!"}), 201
-
-#  RSVP to an event
-@events.route('/create', methods=['POST'])
-def add_create():
+@events.route('/', methods=['POST'])
+def add_():
     # Collect data from the request body
     the_data = request.json
     current_app.logger.info(the_data)
@@ -60,7 +34,7 @@ def add_create():
 
     # Build the SQL query using string interpolation 
     query = f'''
-        INSERT INTO events 
+        INSERT INTO preferences 
         VALUES ('{the_data['datetime']}', '{the_data['title']}', '{the_data['location']}', {the_data['raId']})
     '''
 
@@ -76,7 +50,7 @@ def add_create():
 
 
 # Delete an event
-@events.route('/delete', methods=['DELETE'])
+@events.route('/', methods=['DELETE'])
 def delete_event():
     the_data = request.json
     title = the_data['title']

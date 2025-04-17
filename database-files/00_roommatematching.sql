@@ -70,11 +70,11 @@ CREATE TABLE events (
 );
 
 CREATE TABLE complaints (
-    compId INT,
+    compId INT AUTO_INCREMENT,
     stuId INT,
     description VARCHAR(150),
     PRIMARY KEY (compId),
-    FOREIGN KEY (stuId) REFERENCES student(stuId) ON UPDATE RESTRICT ON DELETE RESTRICT
+    FOREIGN KEY (stuId) REFERENCES student(stuId)
 );
 
 CREATE TABLE studentBridgeRA (

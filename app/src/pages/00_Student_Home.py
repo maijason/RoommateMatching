@@ -20,8 +20,6 @@ st.write("### What would you like to do today?")
 if st.button("📝 Fill Out Preferences", type="primary", use_container_width=True):
     st.switch_page("pages/01_Survey_Form.py")
 
-if st.button("📅 View Upcoming Events", type="primary", use_container_width=True):
-    st.switch_page("pages/05_Upcoming_Events.py")
 
 if st.button("🚨 Report a Disturbance", type="primary", use_container_width=True):
     st.switch_page("pages/06_Log_Disturbance.py")
