@@ -9,7 +9,6 @@ from backend.dorms.dorm_routes import dorms
 from backend.system_admin.system_admin_routes import system_admin
 from backend.ra.ra_routes import ra
 from backend.events.events_routes import events
-from backend.ra.ra_routes import ra
 from backend.housing_admin.housing_admin_routes import housing_admin
 
 import os

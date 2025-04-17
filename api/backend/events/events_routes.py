@@ -5,10 +5,10 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
-events_bp = Blueprint("events_bp", __name__)
+events = Blueprint("events", __name__)
 
 #Get upcoming events
-@events_bp.route("/events/upcoming", methods=["GET"])
+@events.route("/events/upcoming", methods=["GET"])
 def get_upcoming_events():
     query = """
         SELECT datetime, title, location 
@@ -25,7 +25,7 @@ def get_upcoming_events():
     return response
 
 #  RSVP to an event
-@events_bp.route('/events/rsvp', methods=['POST'])
+@events.route('/events/rsvp', methods=['POST'])
 def add_rsvp():
     # Collect data from the request body
     the_data = request.json
@@ -51,7 +51,7 @@ def add_rsvp():
     return jsonify({"message": "RSVP submitted successfully!"}), 201
 
 # Delete an event
-@events_bp.route('/events/delete', methods=['DELETE'])
+@events.route('/events/delete', methods=['DELETE'])
 def delete_event():
     data = request.get_json()
     title = data.get('title')
