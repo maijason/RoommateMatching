@@ -17,16 +17,19 @@ with st.form("preferences_form"):
 
     if submitted:
         data = {
-            "sleepTime": sleep_time.strftime("%H:%M"),
+            "sleepTime": sleep_time,
             "cleanliness": cleanliness,
-            "smoking": 1 if smoking == "No" else 0,
+            "smoking": 1 if smoking == "Yes" else 0,
             "extra_observations": extra_observations
         }
 
         try:
-            response = requests.post("http://localhost:4000/students/<id>/preferences", json=data)
+            response = requests.post(f"http://api:4000/s/students/{student_id}/preferences", json=data)
             if response.status_code == 200:
                 st.success("Preferences submitted successfully!")
+                
+                if st.button("View Potential Roommate Matches"):
+                    st.switch_page("pages/05_Roommate_Matching.py")
             else:
                 st.error("Failed to submit preferences.")
         except requests.exceptions.RequestException:
