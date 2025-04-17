@@ -26,10 +26,11 @@ with st.form("new_event"):
         full_datetime = datetime.combine(date, time)
 
         try:
-            res = requests.post("http://localhost:4000/events/create", json={
+            res = requests.post("http://api:4000/events/create", json={
                 "title": title,
                 "location": location,
-                "datetime": str(full_datetime)
+                "datetime": str(full_datetime),
+                "raId": st.session_state['id']
             })
             if res.status_code == 201:
                 st.success("Event added.")
@@ -39,7 +40,7 @@ with st.form("new_event"):
 
 # Get event data
 try:
-    response = requests.get("http://localhost:4000/events/upcoming")
+    response = requests.get("http://api:4000/events/upcoming")
     response.raise_for_status()
     events = pd.DataFrame(response.json())
 except Exception as e:
@@ -53,8 +54,8 @@ if not events.empty:
         st.caption(f"📍 {event['location']}")
         if st.button("🗑️ Delete", key=f"{event['datetime']}-{event['title']}"):
             try:
-                res = requests.delete("http://localhost:4000/events/delete", json={
-                    "datetime": event["datetime"],
+                res = requests.delete("http://api:4000/events/delete", json={
+                    "datetime": str(pd.to_datetime(event["datetime"])),
                     "title": event["title"]
                 })
                 if res.status_code == 200:

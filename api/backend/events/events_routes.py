@@ -8,7 +8,7 @@ from backend.db_connection import db
 events = Blueprint("events", __name__)
 
 #Get upcoming events
-@events.route("/events/upcoming", methods=["GET"])
+@events.route("/upcoming", methods=["GET"])
 def get_upcoming_events():
     query = """
         SELECT datetime, title, location 
@@ -25,7 +25,7 @@ def get_upcoming_events():
     return response
 
 #  RSVP to an event
-@events.route('/events/rsvp', methods=['POST'])
+@events.route('/rsvp', methods=['POST'])
 def add_rsvp():
     # Collect data from the request body
     the_data = request.json
@@ -50,22 +50,60 @@ def add_rsvp():
     # Send response
     return jsonify({"message": "RSVP submitted successfully!"}), 201
 
+#  RSVP to an event
+@events.route('/create', methods=['POST'])
+def add_create():
+    # Collect data from the request body
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+
+    # Build the SQL query using string interpolation 
+    query = f'''
+        INSERT INTO events 
+        VALUES ('{the_data['datetime']}', '{the_data['title']}', '{the_data['location']}', {the_data['raId']})
+    '''
+
+    # Execute the query
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    # Send response
+    response = make_response("RSVP submitted successfully!")
+    response.status_code = 201
+    return response
+
+
 # Delete an event
-@events.route('/events/delete', methods=['DELETE'])
+@events.route('/delete', methods=['DELETE'])
 def delete_event():
-    data = request.get_json()
-    title = data.get('title')
-    datetime_val = data.get('datetime')
+    the_data = request.json
+    title = the_data['title']
+    datetime_val = the_data['datetime']
 
     current_app.logger.info(f"Deleting event: {title} at {datetime_val}")
 
     cursor = db.get_db().cursor()
     query = """
-        DELETE FROM events
-        WHERE title = %s AND datetime = %s
+        DELETE from RABridgeEvents
+        WHERE title = %s AND datetime = %s;
+
     """
     cursor.execute(query, (title, datetime_val))
     db.get_db().commit()
 
-    return jsonify({"message": "Event deleted"}), 200
+    cursor = db.get_db().cursor()
+    query = """
+        DELETE FROM events
+        WHERE title = %s AND datetime = %s;
+
+    """
+    cursor.execute(query, (title, datetime_val))
+    db.get_db().commit()
+        
+
+    response = make_response("Event deleted")
+    response.status_code = 200
+    return response
 
